@@ -1,0 +1,8 @@
+**/target/
+**/build/
+**/logs/
+**/*.env
+**/Dockerfile
+**/docker-compose.yml
+**/*.cert
+**/*.jks

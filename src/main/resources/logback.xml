@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <property name="LOG_PATH" value="./logs"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE_OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH}/vengeance-chat.log</file>
+    <encoder>
+      <!--      <pattern>-->
+      <!--        %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n-->
+      <!--      </pattern>-->
+      <pattern>
+        %d{dd-MM-yyyy HH:mm:ss.SSS} %-5level %logger{36}.%M - %msg%n
+      </pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>
+        ${LOG_PATH}/archived/vengeance-chat_%d{dd-MM-yyyy}.log
+      </fileNamePattern>
+      <maxHistory>10</maxHistory>
+      <totalSizeCap>100MB</totalSizeCap>
+    </rollingPolicy>
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE_OUT"/>
+  </root>
+
+<!--  <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+</configuration>
