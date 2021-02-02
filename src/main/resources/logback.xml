@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-  <property name="LOG_PATH" value="./logs"/>
+  <property name="LOG_PATH" value="logs"/>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
@@ -12,7 +12,7 @@
   </appender>
 
   <appender name="FILE_OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${LOG_PATH}/vengeance-chat.log</file>
+    <file>${LOG_PATH}/kappa-talk.log</file>
     <encoder>
       <!--      <pattern>-->
       <!--        %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n-->
@@ -23,7 +23,7 @@
     </encoder>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>
-        ${LOG_PATH}/archived/vengeance-chat_%d{dd-MM-yyyy}.log
+        ${LOG_PATH}/archived/kappa-talk_%d{dd-MM-yyyy}.log
       </fileNamePattern>
       <maxHistory>10</maxHistory>
       <totalSizeCap>100MB</totalSizeCap>

@@ -1,5 +1,5 @@
-# vengeance-chat-server
-Vengeance Chat Server
+# kappa-talk-server
+Kappa Talk Server
 
 Technology Stack:
 - Spring Boot

@@ -3,22 +3,24 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for vengeance-chat-server" enabled="true">
+      <profile name="Annotation profile for kappa-talk-server" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processor name="org.springframework.boot.configurationprocessor.ConfigurationMetadataAnnotationProcessor" />
-        <processor name="lombok.launch.AnnotationProcessorHider$AnnotationProcessor" />
-        <module name="vengeance-chat-server" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.18/lombok-1.18.18.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/2.4.1/spring-boot-configuration-processor-2.4.1.jar" />
+        </processorPath>
+        <module name="kappa-talk-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="vengeance-chat-server" target="1.8" />
+      <module name="kappa-talk-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="vengeance-chat-server" options="-parameters" />
+      <module name="kappa-talk-server" options="-parameters" />
     </option>
   </component>
 </project>

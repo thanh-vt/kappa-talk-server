@@ -8,15 +8,6 @@ server:
   port: 8901
   servlet:
     context-path: /kappa-talk
-  ssl:
-    enabled: true
-    enabled-protocols: TLSv1.2
-    key-alias: ${SSL_KEY_ALIAS:}
-    key-password: ${SSL_KEY_PASSWORD:}
-    key-store: classpath:pysga1996.jks
-    key-store-password: ${SSL_KEYSTORE_PASSWORD:}
-    key-store-type: JKS
-    protocol: TLS
 spring:
   data:
     mongodb:

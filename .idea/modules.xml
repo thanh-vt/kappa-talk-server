@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/vengeance-chat-server.iml" filepath="$PROJECT_DIR$/vengeance-chat-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kappa-talk-server.iml" filepath="$PROJECT_DIR$/kappa-talk-server.iml" />
     </modules>
   </component>
 </project>

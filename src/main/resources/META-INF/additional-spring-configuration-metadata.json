@@ -1,18 +1,34 @@
 {
   "properties": [
     {
-      "name": "hazelcast.hosts",
-      "type": "java.lang.String",
-      "description": "Description for hazelcast.hosts."
+      "name": "custom.hazelcast-hosts",
+      "type": "java.lang.String[]",
+      "description": "Description for custom.hazelcast-hosts."
     },
     {
-      "name": "server.http.port",
-      "type": "java.lang.String",
-      "description": "Description for server.http.port."
+      "name": "custom.http-port",
+      "type": "java.lang.Integer",
+      "description": "Description for custom.http-port."
     },
     {
-      "name": "server.https.port",
+      "name": "custom.https-port",
+      "type": "java.lang.Integer",
+      "description": "Description for custom.https-port."
+    },
+    {
+      "name": "custom.security-policy",
       "type": "java.lang.String",
-      "description": "Description for server.https.port."
+      "description": "Description for custom.security-policy."
+    },
+    {
+      "name": "custom.connector-scheme",
+      "type": "java.lang.String",
+      "description": "Description for custom.connector-scheme."
+    },
+    {
+      "name": "custom.auth-service",
+      "type": "java.lang.String",
+      "description": "Description for custom.auth-service."
     }
-  ] }
+  ]
+}

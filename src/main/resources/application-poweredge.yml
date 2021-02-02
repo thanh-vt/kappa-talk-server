@@ -1,0 +1,45 @@
+server:
+    compression:
+        enabled: true
+        mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+        min-response-size: 1024
+    http2:
+        enabled: true
+    port: 8901
+    servlet:
+        context-path: /kappa-talk
+    ssl:
+        enabled: true
+        enabled-protocols: TLSv1.2
+        key-alias: ${SSL_KEY_ALIAS:}
+        key-password: ${SSL_KEY_PASSWORD:}
+        key-store: classpath:pysga1996.jks
+        key-store-password: ${SSL_KEYSTORE_PASSWORD:}
+        key-store-type: JKS
+        protocol: TLS
+spring:
+    data:
+        mongodb:
+            authentication-database: ${MONGO_AUTH_DB:}
+            database: ${MONGO_DB:}
+            uri: ${MONGO_CONNECTION_URL:}
+    banner:
+        location: banner.txt
+    devtools:
+        add-properties: false
+
+custom:
+    hazelcast-hosts: 172.18.0.2,172.18.0.3,172.18.0.4
+    http-port: 8900
+    https-port: 8901
+    security-policy: CONFIDENTAL
+    connector-scheme: http
+    auth-service: http://localhost:8081/lambda-auth/oauth/check_token
+
+logging:
+    config: classpath:log4j-spring.xml
+
+
+
+
+

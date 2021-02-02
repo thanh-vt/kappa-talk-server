@@ -10,10 +10,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.vengeance</groupId>
-  <artifactId>chat</artifactId>
+  <artifactId>kappa-talk-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>vengeance-chat-server</name>
-  <description>Vengeance Chat Server</description>
+  <name>kappa-talk-server</name>
+  <description>Kappa Talk Server</description>
 
   <properties>
     <java.version>1.8</java.version>
@@ -22,13 +22,17 @@
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+      <artifactId>spring-boot-starter</artifactId>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-logging</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -49,12 +53,16 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-logging</artifactId>
-        </exclusion>
-      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security.oauth</groupId>
+      <artifactId>spring-security-oauth2</artifactId>
+      <version>2.4.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security.oauth.boot</groupId>
+      <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+      <version>2.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -78,11 +86,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
+      <version>2.4.1</version>
+<!--      <optional>true</optional>-->
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <scope>provided</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -99,10 +109,6 @@
       <groupId>com.hazelcast</groupId>
       <artifactId>hazelcast</artifactId>
       <version>4.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -137,6 +143,7 @@
           <include>**/*.xml</include>
           <include>**/*.jks</include>
           <include>**/*.cert</include>
+          <include>**/*.txt</include>
         </includes>
       </resource>
     </resources>
@@ -153,11 +160,18 @@
           <compilerVersion>1.8</compilerVersion>
           <source>1.8</source>
           <target>1.8</target>
-          <annotationProcessors>
-            <annotationProcessor>org.springframework.boot.configurationprocessor.ConfigurationMetadataAnnotationProcessor</annotationProcessor>
-            <annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</annotationProcessor>
-<!--            <annotationProcessor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</annotationProcessor>-->
-          </annotationProcessors>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.18</version>
+            </path>
+            <path>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-configuration-processor</artifactId>
+              <version>2.4.1</version>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
     </plugins>
