@@ -29,6 +29,26 @@
       "name": "custom.auth-service",
       "type": "java.lang.String",
       "description": "Description for custom.auth-service."
+    },
+    {
+      "name": "custom.client-id",
+      "type": "java.lang.String",
+      "description": "Description for custom.client-id."
+    },
+    {
+      "name": "custom.client-secret",
+      "type": "java.lang.String",
+      "description": "Description for custom.client-secret."
+    },
+    {
+      "name": "custom.trust-store-password",
+      "type": "java.lang.String",
+      "description": "Description for custom.trust-store-password."
+    },
+    {
+      "name": "custom.trust-store-type",
+      "type": "java.lang.String",
+      "description": "Description for custom.trust-store-type."
     }
   ]
 }

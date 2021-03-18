@@ -13,7 +13,7 @@ server:
     enabled-protocols: TLSv1.2
     key-alias: ${SSL_KEY_ALIAS:}
     key-password: ${SSL_KEY_PASSWORD:}
-    key-store: classpath:pysga1996.jks
+    key-store: classpath:vengeance.jks
     key-store-password: ${SSL_KEYSTORE_PASSWORD:}
     key-store-type: JKS
     protocol: TLS
@@ -25,15 +25,25 @@ spring:
       uri: ${MONGO_CONNECTION_URL:}
   banner:
     location: banner.txt
-
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: ${AUTH_SERVICE:}
+          client-id: ${CLIENT_ID:}
+          client-secret: ${CLIENT_SECRET:}
 custom:
   hazelcast-hosts: localhost
   http-port: 8900
   https-port: 8901
   security-policy: NONE
   connector-scheme: http
-  auth-service: http://localhost:8081/lambda-auth/oauth/check_token
-
+  trust-store-password: ${SSL_TRUSTSTORE_PASSWORD:}
+  trust-store-type: JKS
 logging:
   config: classpath:log4j-spring.xml
+  level:
+    root: INFO
 

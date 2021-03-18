@@ -1,4 +1,4 @@
-package com.kappa.repository;
+package com.kappa.repositories;
 
 import com.kappa.model.HistoryMessageBlock;
 import java.util.Optional;

@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+//import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 @TestConfiguration
 public class TestConfig implements InitializingBean, DisposableBean {
@@ -40,8 +40,8 @@ public class TestConfig implements InitializingBean, DisposableBean {
         executable.start();
     }
 
-    @MockBean
-    public JwtAccessTokenConverter jwtAccessTokenConverter;
+//    @MockBean
+//    public JwtAccessTokenConverter jwtAccessTokenConverter;
 
 
     @Bean

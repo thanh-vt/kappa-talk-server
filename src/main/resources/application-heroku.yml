@@ -16,14 +16,21 @@ spring:
       uri: ${MONGO_CONNECTION_URL:}
   banner:
     location: banner.txt
-
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: ${AUTH_SERVICE:}
+          client-id: ${CLIENT_ID:}
+          client-secret: ${CLIENT_SECRET:}
 custom:
   hazelcast-hosts: localhost
   http-port: 8900
   https-port: 8901
   security-policy: NONE
   connector-scheme: http
-  auth-service: http://localhost:8081/lambda-auth/oauth/check_token
 
 logging:
   config: classpath:log4j-spring.xml

@@ -12,6 +12,8 @@
         <ENTRY IS_ENABLED="false" PARSER="env" PATH="environment/mongo_cluster.env" />
         <ENTRY IS_ENABLED="true" PARSER="env" PATH="environment/ssl_certification.env" />
         <ENTRY IS_ENABLED="true" PARSER="env" PATH="environment/mongo_local.env" />
+        <ENTRY IS_ENABLED="true" PARSER="env" PATH="environment/oauth2.env" />
+        <ENTRY IS_ENABLED="true" PARSER="env" PATH="environment/hazelcast.env" />
       </ENTRIES>
     </extension>
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.kappa.KappaTalkServerApplication" />

@@ -18,11 +18,11 @@ public class CustomHandshakeInterceptor implements HandshakeInterceptor {
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest,
         ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler,
         Map<String, Object> map) {
-        if (serverHttpRequest instanceof ServletServerHttpRequest) {
-            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) serverHttpRequest;
-            HttpSession session = servletRequest.getServletRequest().getSession();
-            map.put("sessionId", session.getId());
-        }
+//        if (serverHttpRequest instanceof ServletServerHttpRequest) {
+//            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) serverHttpRequest;
+//            HttpSession session = servletRequest.getServletRequest().getSession();
+//            map.put("sessionId", session.getId());
+//        }
         return true;
     }
 
@@ -30,4 +30,6 @@ public class CustomHandshakeInterceptor implements HandshakeInterceptor {
     public void afterHandshake(ServerHttpRequest serverHttpRequest,
         ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
     }
+
+
 }
