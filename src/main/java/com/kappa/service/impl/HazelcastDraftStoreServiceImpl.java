@@ -2,7 +2,7 @@ package com.kappa.service.impl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import com.kappa.model.DraftMessageBlock;
+import com.kappa.model.entity.DraftMessageBlock;
 import com.kappa.service.DraftStoreService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +23,29 @@ public class HazelcastDraftStoreServiceImpl implements DraftStoreService {
     }
 
     @Override
-    public Map<Long, Object> getMap(String mapName) {
+    public Map<String, Object> getMap(String mapName) {
         return this.hazelcastClientInstance.getMap(mapName);
     }
 
     @Override
-    public void updateDraft(Map<Long, Object> map, Long conversationId, DraftMessageBlock draft) throws InterruptedException {
-        IMap<Long, Object> hazelcastMap = (IMap<Long, Object>) map;
+    public void updateDraft(Map<String, Object> map, String conversationId, DraftMessageBlock draft) throws InterruptedException {
+        IMap<String, Object> hazelcastMap = (IMap<String, Object>) map;
         while (hazelcastMap.isLocked(conversationId)) {
             Thread.sleep(5000);
         }
+
         hazelcastMap.lock(conversationId);
-        hazelcastMap.replace(conversationId, draft);
+        if (hazelcastMap.containsKey(conversationId)) {
+            hazelcastMap.replace(conversationId, draft);
+        } else {
+            hazelcastMap.put(conversationId, draft);
+        }
         hazelcastMap.unlock(conversationId);
     }
 
     @Override
-    public void clearDraft(Map<Long, Object> map, Long conversationId) throws InterruptedException {
-        IMap<Long, Object> hazelcastMap = (IMap<Long, Object>) map;
+    public void clearDraft(Map<String, Object> map, String conversationId) throws InterruptedException {
+        IMap<String, Object> hazelcastMap = (IMap<String, Object>) map;
         while (hazelcastMap.isLocked(conversationId)) {
             Thread.sleep(5000);
         }

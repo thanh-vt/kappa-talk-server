@@ -49,6 +49,11 @@
       "name": "custom.trust-store-type",
       "type": "java.lang.String",
       "description": "Description for custom.trust-store-type."
+    },
+    {
+      "name": "custom.enable-external-broker",
+      "type": "java.lang.Boolean",
+      "description": "Description for custom.enable-external-broker."
     }
   ]
 }

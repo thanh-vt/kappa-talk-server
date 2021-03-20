@@ -1,7 +1,7 @@
 package com.kappa.service;
 
-import com.kappa.model.ChatInfo;
-import com.kappa.model.Message;
+import com.kappa.model.entity.ChatInfo;
+import com.kappa.model.entity.Message;
 
 public interface ConversationService {
 

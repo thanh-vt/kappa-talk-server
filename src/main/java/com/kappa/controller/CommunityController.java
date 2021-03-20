@@ -1,10 +1,11 @@
 package com.kappa.controller;
 
-import com.kappa.model.ChatInfo;
+import com.kappa.model.entity.ChatInfo;
 import com.kappa.service.ConversationService;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.user.SimpUser;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin
 @RestController
+@CrossOrigin(originPatterns = "*", allowCredentials = "true", allowedHeaders = "*", exposedHeaders = {
+    HttpHeaders.SET_COOKIE})
 public class CommunityController {
 
     private final SimpUserRegistry simpUserRegistry;

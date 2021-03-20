@@ -1,7 +1,7 @@
 package com.kappa.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kappa.model.UserDTO;
+import com.kappa.model.dto.UserDTO;
 import com.kappa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

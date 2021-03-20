@@ -1,7 +1,7 @@
 package com.kappa.service.impl;
 
 import com.kappa.service.DraftStoreService;
-import com.kappa.model.DraftMessageBlock;
+import com.kappa.model.entity.DraftMessageBlock;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.context.annotation.Profile;
@@ -11,20 +11,20 @@ import org.springframework.stereotype.Component;
 @Profile("heroku")
 public class InMemoryDraftStoreServiceImpl implements DraftStoreService {
 
-    private final Map<Long, Object> map = new ConcurrentHashMap<>();
+    private final Map<String, Object> map = new ConcurrentHashMap<>();
 
     @Override
-    public Map<Long, Object> getMap(String mapName) {
+    public Map<String, Object> getMap(String mapName) {
         return this.map;
     }
 
     @Override
-    public void updateDraft(Map<Long, Object> map, Long conversationId, DraftMessageBlock draft) {
+    public void updateDraft(Map<String, Object> map, String conversationId, DraftMessageBlock draft) {
         map.replace(conversationId, draft);
     }
 
     @Override
-    public void clearDraft(Map<Long, Object> map, Long conversationId) {
+    public void clearDraft(Map<String, Object> map, String conversationId) {
         map.remove(conversationId);
     }
 }

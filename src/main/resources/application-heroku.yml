@@ -31,7 +31,7 @@ custom:
   https-port: 8901
   security-policy: NONE
   connector-scheme: http
-
+  enable-external-broker: false
 logging:
   config: classpath:log4j-spring.xml
 

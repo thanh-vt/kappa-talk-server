@@ -34,6 +34,13 @@ spring:
           introspection-uri: ${AUTH_SERVICE:}
           client-id: ${CLIENT_ID:}
           client-secret: ${CLIENT_SECRET:}
+  rabbitmq:
+    host: localhost
+    port: 61613
+    username: guest
+    password: guest
+    template:
+      exchange: /amq.direct
 custom:
   hazelcast-hosts: localhost
   http-port: 8900
@@ -42,6 +49,7 @@ custom:
   connector-scheme: http
   trust-store-password: ${SSL_TRUSTSTORE_PASSWORD:}
   trust-store-type: JKS
+  enable-external-broker: false
 logging:
   config: classpath:log4j-spring.xml
   level:

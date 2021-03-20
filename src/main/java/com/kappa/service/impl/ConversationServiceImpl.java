@@ -2,11 +2,11 @@ package com.kappa.service.impl;
 
 import com.kappa.constant.CommonConstant;
 import com.kappa.service.DraftStoreService;
-import com.kappa.model.ChatInfo;
-import com.kappa.model.Conversation;
-import com.kappa.model.DraftMessageBlock;
-import com.kappa.model.HistoryMessageBlock;
-import com.kappa.model.Message;
+import com.kappa.model.entity.ChatInfo;
+import com.kappa.model.entity.Conversation;
+import com.kappa.model.entity.DraftMessageBlock;
+import com.kappa.model.entity.HistoryMessageBlock;
+import com.kappa.model.entity.Message;
 import com.kappa.repositories.ConversationRepository;
 import com.kappa.repositories.HistoryMessageBlockRepository;
 import com.kappa.service.ConversationService;
@@ -46,8 +46,8 @@ public class ConversationServiceImpl implements ConversationService {
 
         String[] users = new String[]{fromUser, toUser};
         Conversation conversation = this.getConversation(users);
-        long conversationId = conversation.getId().longValue();
-        Map<Long, Object> conversationMap = this.draftStoreService.getMap(CommonConstant.DRAFT_MAP_NAME);
+        String conversationId = conversation.getId();
+        Map<String, Object> conversationMap = this.draftStoreService.getMap(CommonConstant.DRAFT_MAP_NAME);
         DraftMessageBlock draft = this.getLatestBlock(users, conversationId, conversationMap);
         ChatInfo chatInfo = new ChatInfo();
         chatInfo.setConversationId(conversationId);
@@ -71,15 +71,15 @@ public class ConversationServiceImpl implements ConversationService {
     @Override
     public synchronized void updateDraft(Message message) throws InterruptedException {
         String[] users = new String[]{message.getFrom(), message.getTo()};
-        long conversationId = message.getConversationId();
-        Map<Long, Object> conversationMap = this.draftStoreService.getMap(CommonConstant.DRAFT_MAP_NAME);
+        String conversationId = message.getConversationId();
+        Map<String, Object> conversationMap = this.draftStoreService.getMap(CommonConstant.DRAFT_MAP_NAME);
         DraftMessageBlock draft = getLatestBlock(users, conversationId, conversationMap);
         draft.getMessages().add(message);
         this.draftStoreService.updateDraft(conversationMap, conversationId, draft);
     }
 
-    private synchronized DraftMessageBlock getLatestBlock(String[] users, long conversationId,
-        Map<Long, Object> conversationMap) throws InterruptedException {
+    private synchronized DraftMessageBlock getLatestBlock(String[] users, String conversationId,
+        Map<String, Object> conversationMap) throws InterruptedException {
         DraftMessageBlock draft = (DraftMessageBlock) conversationMap.get(conversationId);
         if (draft == null) {
             draft = createNewDraft(users, conversationId, conversationMap);
@@ -90,8 +90,8 @@ public class ConversationServiceImpl implements ConversationService {
         return draft;
     }
 
-    private DraftMessageBlock createNewDraft(String[] users, long conversationId,
-        Map<Long, Object> conversationMap) throws InterruptedException {
+    private DraftMessageBlock createNewDraft(String[] users, String conversationId,
+        Map<String, Object> conversationMap) throws InterruptedException {
         DraftMessageBlock draft;
         draft = new DraftMessageBlock();
         draft.setConversationId(conversationId);
