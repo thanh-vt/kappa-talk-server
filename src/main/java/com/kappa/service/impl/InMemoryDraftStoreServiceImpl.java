@@ -20,7 +20,7 @@ public class InMemoryDraftStoreServiceImpl implements DraftStoreService {
 
     @Override
     public void updateDraft(Map<String, Object> map, String conversationId, DraftMessageBlock draft) {
-        map.replace(conversationId, draft);
+        map.put(conversationId, draft);
     }
 
     @Override

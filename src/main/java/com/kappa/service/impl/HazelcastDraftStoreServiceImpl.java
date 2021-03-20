@@ -35,11 +35,7 @@ public class HazelcastDraftStoreServiceImpl implements DraftStoreService {
         }
 
         hazelcastMap.lock(conversationId);
-        if (hazelcastMap.containsKey(conversationId)) {
-            hazelcastMap.replace(conversationId, draft);
-        } else {
-            hazelcastMap.put(conversationId, draft);
-        }
+        hazelcastMap.put(conversationId, draft);
         hazelcastMap.unlock(conversationId);
     }
 
