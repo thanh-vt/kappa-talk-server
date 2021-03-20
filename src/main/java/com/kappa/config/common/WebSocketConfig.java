@@ -22,16 +22,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${custom.enable-external-broker:false}")
     private boolean enableRabbitMq;
 
-    @Value("${spring.rabbitmq.host}")
+    @Value("${spring.rabbitmq.host:unknown}")
     private String rabbitmqHost;
 
-    @Value("${spring.rabbitmq.port}")
+    @Value("${spring.rabbitmq.port:61613}")
     private int rabbitmqStompPort;
 
-    @Value("${spring.rabbitmq.username}")
+    @Value("${spring.rabbitmq.username:unknown}")
     private String rabbitmqUserName;
 
-    @Value("${spring.rabbitmq.password}")
+    @Value("${spring.rabbitmq.password:unknown}")
     private String rabbitmqPassword;
 
     private final CustomHandshakeHandler customHandshakeHandler;

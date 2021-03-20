@@ -34,13 +34,20 @@ spring:
           introspection-uri: ${AUTH_SERVICE:}
           client-id: ${CLIENT_ID:}
           client-secret: ${CLIENT_SECRET:}
+  rabbitmq:
+    host: vengeance-rabbitmq
+    port: 61613
+    username: guest
+    password: guest
+    template:
+      exchange: /amq.direct
 custom:
   hazelcast-hosts: ${HOSTS:}
   http-port: 8900
   https-port: 8901
   security-policy: CONFIDENTAL
   connector-scheme: http
-  enable-external-broker: false
+  enable-external-broker: true
 logging:
   config: classpath:log4j-spring.xml
   level:
