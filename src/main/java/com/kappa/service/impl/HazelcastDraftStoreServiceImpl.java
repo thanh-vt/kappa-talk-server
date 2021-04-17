@@ -2,9 +2,11 @@ package com.kappa.service.impl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import com.kappa.model.entity.DraftMessageBlock;
+import com.kappa.model.entity.MessageBlock;
 import com.kappa.service.DraftStoreService;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
@@ -28,10 +30,10 @@ public class HazelcastDraftStoreServiceImpl implements DraftStoreService {
     }
 
     @Override
-    public void updateDraft(Map<String, Object> map, String conversationId, DraftMessageBlock draft) throws InterruptedException {
+    public void updateDraft(Map<String, Object> map, String conversationId, MessageBlock draft) {
         IMap<String, Object> hazelcastMap = (IMap<String, Object>) map;
         while (hazelcastMap.isLocked(conversationId)) {
-            Thread.sleep(5000);
+            LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(10000));
         }
 
         hazelcastMap.lock(conversationId);
@@ -40,10 +42,10 @@ public class HazelcastDraftStoreServiceImpl implements DraftStoreService {
     }
 
     @Override
-    public void clearDraft(Map<String, Object> map, String conversationId) throws InterruptedException {
+    public void clearDraft(Map<String, Object> map, String conversationId) {
         IMap<String, Object> hazelcastMap = (IMap<String, Object>) map;
         while (hazelcastMap.isLocked(conversationId)) {
-            Thread.sleep(5000);
+            LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(10000));
         }
         hazelcastMap.lock(conversationId);
         hazelcastMap.remove(conversationId);

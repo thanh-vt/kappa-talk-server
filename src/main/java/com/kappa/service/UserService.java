@@ -1,9 +1,12 @@
 package com.kappa.service;
 
-import com.kappa.model.dto.UserDTO;
+import java.util.Map;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 public interface UserService {
 
-    UserDTO getCurrentUser();
+    OAuth2AuthenticatedPrincipal getCurrentUser();
+
+    Map<String, Object> getCurrentUserShortInfo();
 
 }

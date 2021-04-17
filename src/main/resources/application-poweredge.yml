@@ -27,6 +27,12 @@ spring:
     location: banner.txt
   main:
     allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
   security:
     oauth2:
       resourceserver:
@@ -35,12 +41,23 @@ spring:
           client-id: ${CLIENT_ID:}
           client-secret: ${CLIENT_SECRET:}
   rabbitmq:
-    host: vengeance-rabbitmq
-    port: 61613
-    username: guest
-    password: guest
+    host: ${RABBITMQ_HOST:}
+    port: ${RABBITMQ_PORT:}
+    username: ${RABBITMQ_USERNAME:}
+    password: ${RABBITMQ_PASSWORD:}
     template:
-      exchange: /amq.direct
+      exchange: ${RABBITMQ_EXCHANGE:}
+storage:
+  storage-type: local
+  temp: ${TEMP_DIR:}
+  cloudinary:
+    url: ${CLOUDINARY_URL:}
+  firebase:
+    database-url: ${FIREBASE_DATABASE_URL:}
+    storage-bucket: ${FIREBASE_STORAGE_BUCKET:}
+    credentials: ${FIREBASE_CREDENTIALS:}
+  local:
+    upload-dir: ${UPLOAD_DIR:}
 custom:
   hazelcast-hosts: ${HOSTS:}
   http-port: 8900

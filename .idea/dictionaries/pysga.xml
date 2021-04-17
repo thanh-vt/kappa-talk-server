@@ -2,6 +2,9 @@
   <dictionary name="pysga">
     <words>
       <w>introspector</w>
+      <w>opaquetoken</w>
+      <w>resourceserver</w>
+      <w>uploadable</w>
     </words>
   </dictionary>
 </component>

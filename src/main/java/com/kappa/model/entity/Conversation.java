@@ -1,40 +1,37 @@
 package com.kappa.model.entity;
 
-import java.math.BigInteger;
 import java.util.Date;
-import org.bson.types.ObjectId;
+import java.util.List;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Document(collection = "conversation")
 public class Conversation {
 
     @Id
     private String id;
+
     private String[] users;
+
+    private int[] unreadMessages;
+
+    @Transient
+    private int currentUserIndex;
+
     private Date startTime;
 
-    public String getId() {
-        return id;
-    }
+    private Date lastUpdate;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @Transient
+    private String chatterName;
 
-    public String[] getUsers() {
-        return users;
-    }
+    @Transient
+    private boolean isChatterOnline;
 
-    public void setUsers(String[] users) {
-        this.users = users;
-    }
+    @Transient
+    private List<MessageBlock> messageBlockList;
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
 }

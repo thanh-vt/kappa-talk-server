@@ -4,6 +4,7 @@ import com.kappa.config.custom.CustomHandshakeHandler;
 import com.kappa.config.custom.CustomHandshakeInterceptor;
 import com.kappa.config.custom.CustomUserDestinationResolver;
 import com.kappa.config.custom.CustomUserInterceptor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+@Log4j2
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
@@ -53,11 +55,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
 //        config.enableSimpleBroker("/topic/", "/queue/");
         if (this.enableRabbitMq) {
+            log.info("RabbitMQ info: {}, {}, {}, {}", rabbitmqHost, rabbitmqStompPort, rabbitmqUserName, rabbitmqPassword);
             config.enableStompBrokerRelay("/topic/", "/queue/", "/exchange/", "/amq/queue")
                 .setRelayHost(rabbitmqHost)
                 .setRelayPort(rabbitmqStompPort)
                 .setSystemLogin(rabbitmqUserName)
-                .setSystemPasscode(rabbitmqPassword);
+                .setSystemPasscode(rabbitmqPassword)
+                .setClientLogin(rabbitmqUserName)
+                .setClientPasscode(rabbitmqPassword);
         } else {
             config.enableSimpleBroker("/topic/", "/queue/", "/exchange/", "/amq/queue");
         }

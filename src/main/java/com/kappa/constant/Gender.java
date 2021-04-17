@@ -12,11 +12,11 @@ public enum Gender {
     BISEXUAL(3),
     UNKNOWN(4);
 
-    private static final Map<Integer, Gender> genderMap = new HashMap<>();
+    private static final Map<Integer, Gender> GENDER_MAP = new HashMap<>();
 
     static {
         for (Gender gender : Gender.values()) {
-            genderMap.put(gender.value, gender);
+            GENDER_MAP.put(gender.value, gender);
         }
     }
 
@@ -30,7 +30,7 @@ public enum Gender {
     @JsonCreator
     public static Gender fromValue(Integer integer) {
         if (integer == null) return Gender.UNKNOWN;
-        Gender gender = genderMap.get(integer);
+        Gender gender = GENDER_MAP.get(integer);
         if (gender == null) return Gender.UNKNOWN;
         return gender;
     }

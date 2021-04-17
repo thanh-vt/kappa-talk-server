@@ -1,6 +1,7 @@
 package com.kappa.controller;
 
 import com.kappa.constant.ChatDestinationName;
+import com.kappa.model.entity.Attachment;
 import com.kappa.model.entity.Message;
 import com.kappa.service.ConversationService;
 import java.util.Date;
@@ -45,17 +46,32 @@ public class ChatController {
         return new Message("Hello, " + HtmlUtils.htmlEscape(message.getTo()) + "!");
     }
 
-    @MessageMapping("/to-self")
+    @MessageMapping("/message/to-self")
     @SendToUser(destinations = ChatDestinationName.PRIVATE_CHAT, broadcast = true)
-    public Message messageToSelf(@Payload Message message) throws InterruptedException {
+    public Message messageToSelf(@Payload Message message) {
         message.setTo(message.getFrom());
         this.conversationService.updateDraft(message);
         return message;
     }
 
-    @MessageMapping("/to-someone")
-    public void messageToUser(@Payload Message message, @Header("simpSessionId") String sessionId)
-        throws InterruptedException {
+    @MessageMapping("/file/to-self")
+    @SendToUser(destinations = ChatDestinationName.PRIVATE_CHAT, broadcast = true)
+    public Attachment fileToSelf(@Payload Attachment message) {
+        message.setTo(message.getFrom());
+        this.conversationService.updateDraft(message);
+        return message;
+    }
+
+    @MessageMapping("/message/to-someone")
+    public void messageToUser(@Payload Message message, @Header("simpSessionId") String sessionId) {
+        log.debug("Message from session: {}", sessionId);
+        this.conversationService.updateDraft(message);
+        this.template.convertAndSendToUser(message.getFrom(), ChatDestinationName.PRIVATE_CHAT, message);
+        this.template.convertAndSendToUser(message.getTo(), ChatDestinationName.PRIVATE_CHAT, message);
+    }
+
+    @MessageMapping("/file/to-someone")
+    public void fileToUser(@Payload Attachment message, @Header("simpSessionId") String sessionId) {
         log.debug("Message from session: {}", sessionId);
         this.conversationService.updateDraft(message);
         this.template.convertAndSendToUser(message.getFrom(), ChatDestinationName.PRIVATE_CHAT, message);

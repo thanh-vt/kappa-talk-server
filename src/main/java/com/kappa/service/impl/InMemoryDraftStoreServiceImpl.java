@@ -1,7 +1,7 @@
 package com.kappa.service.impl;
 
+import com.kappa.model.entity.MessageBlock;
 import com.kappa.service.DraftStoreService;
-import com.kappa.model.entity.DraftMessageBlock;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.context.annotation.Profile;
@@ -19,7 +19,7 @@ public class InMemoryDraftStoreServiceImpl implements DraftStoreService {
     }
 
     @Override
-    public void updateDraft(Map<String, Object> map, String conversationId, DraftMessageBlock draft) {
+    public void updateDraft(Map<String, Object> map, String conversationId, MessageBlock draft) {
         map.put(conversationId, draft);
     }
 

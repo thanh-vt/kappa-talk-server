@@ -1,6 +1,5 @@
 package com.kappa.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,11 +16,8 @@ public class SettingDTO implements Serializable {
 
     private static final long serialVersionUID = 43L;
 
-    private Long id;
-
-    private Long userId;
+    private String username;
 
     @Builder.Default
-    @JsonProperty("dark_mode")
     private Boolean darkMode = true;
 }

@@ -1,28 +1,28 @@
 package com.kappa.model.dto;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
-import lombok.AllArgsConstructor;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO implements UserDetails, Serializable {
-
-    private Long id;
 
     private UserProfileDTO userProfile;
 
     private SettingDTO setting;
 
+    @NotBlank(message = "{validation.username.notBlank}")
     private String username;
 
+    @Size(min = 6, max = 15)
+    @NotBlank(message = "{validation.password.notBlank}")
     private String password;
 
     private boolean enabled;
@@ -38,6 +38,21 @@ public class UserDTO implements UserDetails, Serializable {
     public UserDTO(String username, String password, boolean enabled,
                    boolean accountNonExpired, boolean accountNonLocked,
                    boolean credentialsNonExpired, Set<GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.authorities = authorities;
+    }
+
+    public UserDTO(UserProfileDTO userProfile, SettingDTO setting,
+                   String username, String password,
+                   boolean enabled, boolean accountNonExpired, boolean accountNonLocked,
+                   boolean credentialsNonExpired, Set<GrantedAuthority> authorities) {
+        this.userProfile = userProfile;
+        this.setting = setting;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -82,13 +97,9 @@ public class UserDTO implements UserDetails, Serializable {
         return authorities;
     }
 
-    public Map<String, Boolean> getBasicInfo() {
-        Map<String, Boolean> otherInfo = new HashMap<>();
-        otherInfo.put("enabled", this.isEnabled());
-        otherInfo.put("accountNonLocked", this.isAccountNonLocked());
-        otherInfo.put("accountNonExpired", this.isAccountNonExpired());
-        otherInfo.put("credentialsNonExpired", this.isCredentialsNonExpired());
-        return otherInfo;
+    public UserDetails getBasicInfo() {
+        return User.withUserDetails(this).build();
     }
+
 }
 
