@@ -40,6 +40,8 @@ spring:
           introspection-uri: ${AUTH_SERVICE:}
           client-id: ${CLIENT_ID:}
           client-secret: ${CLIENT_SECRET:}
+        jwt:
+          jwk-set-uri: ${JWKS_ENDPOINT:}
   rabbitmq:
     host: ${RABBITMQ_HOST:}
     port: ${RABBITMQ_PORT:}

@@ -1,4 +1,4 @@
-package com.kappa.config.custom;
+package com.kappa.config.general;
 
 import com.cloudinary.Cloudinary;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CustomBeanConfig implements WebMvcConfigurer {
+public class CommonConfig implements WebMvcConfigurer {
 
     @Value("${storage.cloudinary.url}")
     private String cloudinaryUrl;

@@ -1,4 +1,4 @@
-package com.kappa.config.custom;
+package com.kappa.config.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

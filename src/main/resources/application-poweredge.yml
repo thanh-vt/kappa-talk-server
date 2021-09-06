@@ -40,6 +40,8 @@ spring:
           introspection-uri: ${AUTH_SERVICE:}
           client-id: ${CLIENT_ID:}
           client-secret: ${CLIENT_SECRET:}
+        jwt:
+          jwk-set-uri: ${JWKS_ENDPOINT:}
   rabbitmq:
     host: ${RABBITMQ_HOST:}
     port: ${RABBITMQ_PORT:}
@@ -62,7 +64,7 @@ custom:
   hazelcast-hosts: ${HOSTS:}
   http-port: 8900
   https-port: 8901
-  security-policy: CONFIDENTAL
+  security-policy: CONFIDENTIAL
   connector-scheme: http
   enable-external-broker: true
 logging:

@@ -1,4 +1,4 @@
-package com.kappa.config.custom;
+package com.kappa.config.security;
 
 import java.security.Principal;
 import java.util.ArrayList;

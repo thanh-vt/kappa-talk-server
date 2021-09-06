@@ -1,4 +1,4 @@
-package com.kappa.config.custom;
+package com.kappa.config.security;
 
 import com.kappa.constant.ChatDestinationName;
 import java.security.Principal;

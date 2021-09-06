@@ -10,9 +10,16 @@ spring:
       username: ${CONFIG_USERNAME:}
       password: ${CONFIG_PASSWORD:}
       label: ${CONFIG_GIT_BRANCH:}
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   instance:
     hostname: kappa-talk-server.herokuapp.com
+    secure-port-enabled: true
+    secure-port: 443
+    non-secure-port-enabled: false
+    non-secure-port: 80
   #    prefer-ip-address: true
   client:
     serviceUrl:

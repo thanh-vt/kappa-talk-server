@@ -1,4 +1,4 @@
-package com.kappa.config.common;
+package com.kappa.config.general;
 
 import com.kappa.util.MessageCommandConverter;
 import com.kappa.util.MessageStatusConverter;

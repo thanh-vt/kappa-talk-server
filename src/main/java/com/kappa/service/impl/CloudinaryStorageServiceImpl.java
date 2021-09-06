@@ -2,6 +2,7 @@ package com.kappa.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.kappa.constant.CommonConstant;
 import com.kappa.model.dto.Uploadable;
 import com.kappa.service.StorageService;
 import java.io.File;
@@ -40,7 +41,7 @@ public class CloudinaryStorageServiceImpl extends StorageService {
 
     @Override
     public String upload(MultipartFile multipartFile, Uploadable uploadable) throws IOException {
-        File tmpDir = new File(servletContext.getRealPath("/") + this.tempFolder);
+        File tmpDir = new File(servletContext.getRealPath(CommonConstant.SLASH) + this.tempFolder);
         if (!tmpDir.exists()) {
             log.info("Created temp folder? {}", tmpDir.mkdir());
         }

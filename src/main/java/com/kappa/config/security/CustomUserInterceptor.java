@@ -1,4 +1,4 @@
-package com.kappa.config.custom;
+package com.kappa.config.security;
 
 import java.util.Map;
 import lombok.extern.log4j.Log4j2;

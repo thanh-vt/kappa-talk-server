@@ -4,7 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Getter;
 
+/**
+  * @created 25/04/2021 - 12:51:04 SA
+  * @project vengeance
+  * @author thanhvt
+  * @description
+  * @since 1.0
+**/
 public enum MessageType {
 
     TEXT(1),
@@ -20,6 +28,7 @@ public enum MessageType {
         }
     }
 
+    @Getter
     @JsonValue
     private final int value;
 
@@ -33,9 +42,5 @@ public enum MessageType {
         MessageType messageType = MESSAGE_TYPE_MAP.get(integer);
         if (messageType == null) return MessageType.TEXT;
         return messageType;
-    }
-
-    public int getValue() {
-        return value;
     }
 }

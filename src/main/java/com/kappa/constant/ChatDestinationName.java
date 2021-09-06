@@ -1,5 +1,12 @@
 package com.kappa.constant;
 
+/**
+  * @created 25/04/2021 - 12:52:14 SA
+  * @project vengeance
+  * @author thanhvt
+  * @description
+  * @since 1.0
+**/
 public final class ChatDestinationName {
 
     public static final String PRIVATE_CHAT = "/amq.direct";

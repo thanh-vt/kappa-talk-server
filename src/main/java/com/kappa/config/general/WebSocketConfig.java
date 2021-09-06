@@ -1,9 +1,9 @@
-package com.kappa.config.common;
+package com.kappa.config.general;
 
-import com.kappa.config.custom.CustomHandshakeHandler;
-import com.kappa.config.custom.CustomHandshakeInterceptor;
-import com.kappa.config.custom.CustomUserDestinationResolver;
-import com.kappa.config.custom.CustomUserInterceptor;
+import com.kappa.config.security.CustomHandshakeHandler;
+import com.kappa.config.security.CustomHandshakeInterceptor;
+import com.kappa.config.security.CustomUserDestinationResolver;
+import com.kappa.config.security.CustomUserInterceptor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

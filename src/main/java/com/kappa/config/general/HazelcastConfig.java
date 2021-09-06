@@ -1,4 +1,4 @@
-package com.kappa.config.common;
+package com.kappa.config.general;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;

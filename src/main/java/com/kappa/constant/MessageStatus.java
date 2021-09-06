@@ -4,7 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Getter;
 
+/**
+  * @created 25/04/2021 - 12:50:59 SA
+  * @project vengeance
+  * @author thanhvt
+  * @description
+  * @since 1.0
+**/
 public enum MessageStatus {
 
     ACTIVE(1),
@@ -18,6 +26,7 @@ public enum MessageStatus {
         }
     }
 
+    @Getter
     @JsonValue
     private final int value;
 
@@ -31,9 +40,5 @@ public enum MessageStatus {
         MessageStatus messageStatus = MESSAGE_STATUS_MAP.get(integer);
         if (messageStatus == null) return MessageStatus.ACTIVE;
         return messageStatus;
-    }
-
-    public int getValue() {
-        return value;
     }
 }

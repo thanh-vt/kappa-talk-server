@@ -21,6 +21,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.util.HtmlUtils;
 
+/**
+ * Controller handling chat message via websocket
+ *
+ * @created 25/04/2021 - 01:56:12 SA
+ * @project vengeance
+ * @author thanhvt
+ * @since 1.0
+**/
 @Log4j2
 @Controller
 @CrossOrigin(originPatterns = "*", allowCredentials = "true", allowedHeaders = "*",
@@ -37,15 +45,32 @@ public class ChatController {
         this.conversationService = conversationService;
     }
 
+    /**
+     * @created 25/04/2021 - 01:00:00 SA
+     * @author thanhvt
+     * @description handle message in "hello" queue
+     * @param message inbound message
+     * @param stompHeaderAccessor header accessor
+     * @return outbound message
+     * @throws Exception when sleeping thread is interrupted
+     */
     @MessageMapping("/hello")
     @SendTo(ChatDestinationName.GREETINGS)
     public Message greeting(@Payload Message message, StompHeaderAccessor stompHeaderAccessor)
         throws Exception {
         log.debug(stompHeaderAccessor.getHost());
         Thread.sleep(1000); // simulated delay
-        return new Message("Hello, " + HtmlUtils.htmlEscape(message.getTo()) + "!");
+        return new Message(
+            String.format("Welcome to chat room, %s!", HtmlUtils.htmlEscape(message.getTo())));
     }
 
+    /**
+     * @created 25/04/2021 - 01:03:39 SA
+     * @author thanhvt
+     * @description self chat send message
+     * @param message inbound message
+     * @return outbound message
+     */
     @MessageMapping("/message/to-self")
     @SendToUser(destinations = ChatDestinationName.PRIVATE_CHAT, broadcast = true)
     public Message messageToSelf(@Payload Message message) {
@@ -54,6 +79,13 @@ public class ChatController {
         return message;
     }
 
+    /**
+     * @created 25/04/2021 - 01:03:39 SA
+     * @author thanhvt
+     * @description self chat send file
+     * @param message inbound message
+     * @return outbound message
+     */
     @MessageMapping("/file/to-self")
     @SendToUser(destinations = ChatDestinationName.PRIVATE_CHAT, broadcast = true)
     public Attachment fileToSelf(@Payload Attachment message) {
@@ -62,6 +94,12 @@ public class ChatController {
         return message;
     }
 
+    /**
+     * @created 25/04/2021 - 01:03:39 SA
+     * @author thanhvt
+     * @description friend chat send message
+     * @param message inbound message
+     */
     @MessageMapping("/message/to-someone")
     public void messageToUser(@Payload Message message, @Header("simpSessionId") String sessionId) {
         log.debug("Message from session: {}", sessionId);
@@ -70,6 +108,12 @@ public class ChatController {
         this.template.convertAndSendToUser(message.getTo(), ChatDestinationName.PRIVATE_CHAT, message);
     }
 
+    /**
+     * @created 25/04/2021 - 01:03:39 SA
+     * @author thanhvt
+     * @description friend chat send file
+     * @param message inbound message
+     */
     @MessageMapping("/file/to-someone")
     public void fileToUser(@Payload Attachment message, @Header("simpSessionId") String sessionId) {
         log.debug("Message from session: {}", sessionId);
@@ -78,6 +122,13 @@ public class ChatController {
         this.template.convertAndSendToUser(message.getTo(), ChatDestinationName.PRIVATE_CHAT, message);
     }
 
+    /**
+     * @created 25/04/2021 - 01:02:08 SA
+     * @author thanhvt
+     * @description handle socket error
+     * @param ex socket general exception
+     * @return notification message when error occur
+     */
     @MessageExceptionHandler
     @SendToUser(destinations = ChatDestinationName.ERROR, broadcast = true)
     public Message handleException(Exception ex) {

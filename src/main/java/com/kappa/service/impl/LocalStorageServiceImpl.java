@@ -1,6 +1,7 @@
 package com.kappa.service.impl;
 
 import com.kappa.config.properties.LocalStorageProperty;
+import com.kappa.constant.CommonConstant;
 import com.kappa.error.FileNotFoundException;
 import com.kappa.error.FileStorageException;
 import com.kappa.model.dto.Uploadable;
@@ -53,16 +54,16 @@ public class LocalStorageServiceImpl extends StorageService {
             if (fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
-            String blobString = folder + "/" + fileName;
+            String blobString = folder + CommonConstant.SLASH + fileName;
             // Copy file to the target location (Replacing existing file with the same title)
             Path targetLocation = this.storageLocation.resolve(blobString);
             uploadable.setBlobString(blobString);
             Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             return ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path(rootUri)
-                    .path("/")
+                    .path(CommonConstant.SLASH)
                     .path(folder)
-                    .path("/")
+                    .path(CommonConstant.SLASH)
                     .path(fileName).toUriString();
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
@@ -79,15 +80,15 @@ public class LocalStorageServiceImpl extends StorageService {
     @Override
     public Resource loadFileAsResource(String fileName, String folder) {
         try {
-            Path filePath = storageLocation.resolve(folder + "/" + fileName).normalize();
+            Path filePath = storageLocation.resolve(folder + CommonConstant.SLASH + fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new FileNotFoundException("File not found " + folder + "/" + fileName);
+                throw new FileNotFoundException("File not found " + folder + CommonConstant.SLASH + fileName);
             }
         } catch (MalformedURLException ex) {
-            throw new FileNotFoundException("File not found " + folder + "/" + fileName, ex);
+            throw new FileNotFoundException("File not found " + folder + CommonConstant.SLASH + fileName, ex);
         }
     }
 }

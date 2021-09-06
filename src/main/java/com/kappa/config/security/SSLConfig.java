@@ -1,4 +1,4 @@
-package com.kappa.config.custom;
+package com.kappa.config.security;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,21 +14,25 @@ import javax.net.ssl.TrustManagerFactory;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.cloud.CloudPlatform;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
+import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
 @Log4j2
 @Configuration
-@Profile({"default","poweredge"})
 public class SSLConfig {
 
     @Value("classpath:vengeance.jks")
@@ -45,6 +49,13 @@ public class SSLConfig {
 
     @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret}")
     private String clientSecret;
+
+    private final Environment env;
+
+    @Autowired
+    public SSLConfig(Environment env) {
+        this.env = env;
+    }
 
     //    static {
 //        //for localhost testing only
@@ -71,7 +82,7 @@ public class SSLConfig {
 //        System.setProperty("javax.net.ssl.trustStoreType", Objects.requireNonNull(trustStoreType));
 //    }
 
-//    @PostConstruct
+    //    @PostConstruct
     public SSLContext customSSL() {
         try {
             HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> hostname.equals("localhost"));
@@ -98,7 +109,7 @@ public class SSLConfig {
             SSLContext.setDefault(context);
             return context;
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException
-                | CertificateException | KeyManagementException ex) {
+            | CertificateException | KeyManagementException ex) {
             //Handle error
             log.error(ex);
             return null;
@@ -106,12 +117,18 @@ public class SSLConfig {
     }
 
     @Bean
+    @Primary
     @LoadBalanced
-    public RestTemplate restTemplate(RestTemplateBuilder rtb) {
+    public RestOperations restTemplate(RestTemplateBuilder rtb) {
         RestTemplate restTemplate = rtb.build();
-        HttpClient httpClient = HttpClients.custom().setSSLContext(this.customSSL()).build();
-        ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-        restTemplate.setRequestFactory(requestFactory);
+        if (CloudPlatform.HEROKU.isActive(this.env)) {
+            log.info("Heroku detected, rest template does not setup SSL");
+        } else {
+            log.info("Not Heroku, rest template is setting up SSL");
+            HttpClient httpClient = HttpClients.custom().setSSLContext(this.customSSL()).build();
+            ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+            restTemplate.setRequestFactory(requestFactory);
+        }
         restTemplate.getInterceptors()
             .add(new BasicAuthenticationInterceptor(clientId, clientSecret));
         return restTemplate;

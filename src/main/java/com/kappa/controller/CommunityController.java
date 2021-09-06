@@ -19,6 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+  * @created 25/04/2021 - 12:58:57 SA
+  * @project vengeance
+  * @author thanhvt
+  * @description
+  * @since 1.0
+**/
 @RestController
 @RequestMapping("/community")
 @CrossOrigin(originPatterns = "*", allowCredentials = "true", allowedHeaders = "*",
